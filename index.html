@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FarmSathi - Smart Farming with AI | Crop Disease Detection & Growth Guidance</title>
+  <meta name="description" content="FarmSathi is an AI-powered agriculture assistance platform helping Indian farmers identify crop diseases, get personalized fertilizer recommendations, and chat with FarmSathi AI in Marathi, Hindi, and English.">
+  <meta name="keywords" content="FarmSathi, agriculture AI, crop disease detection, fertilizer recommendation, sugarcane disease, rice blast, wheat rust, kisan mitra, marathi kheti, hindi kheti">
+  <meta name="theme-color" content="#15803d">
+
+  <!-- Favicon SVG -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌱</text></svg>">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Top Agri-Advisory Notice Ticker -->
+  <aside class="top-notice-bar" aria-label="Agricultural notification bar">
+    <div class="notice-content">
+      <span class="live-badge">LIVE ADVISORY</span>
+      <span id="topNoticeText">🌿 Central Agro-Advisory: Optimal moisture condition for foliar nutrition today. Farmers are advised to avoid afternoon sprays in windy weather.</span>
+    </div>
+  </aside>
+
+  <!-- Main Navigation Header -->
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="brand-logo" id="navLogoBtn" onclick="switchView('home')">
+        <div class="logo-icon-wrap" aria-hidden="true">🌱</div>
+        <div class="brand-text">
+          <h1>FarmSathi <span style="font-size: 0.8rem; background: #dcfce7; color: #166534; padding: 2px 8px; border-radius: 99px; font-weight: 700;">AI</span></h1>
+          <div class="brand-tagline" id="brandTaglineText">शेतकऱ्यांचा विश्वासू डिजिटल साथीदार • Smart Farming with AI</div>
+        </div>
+      </div>
+
+      <!-- Desktop Nav Links -->
+      <nav aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li>
+            <button class="nav-link active" id="tabHome" onclick="switchView('home')">
+              <span class="icon">🏠</span> <span data-i18n="nav_home">Home</span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-link" id="tabDetect" onclick="switchView('detect')">
+              <span class="icon">🔍</span> <span data-i18n="nav_detect">Crop Disease AI</span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-link" id="tabFertilizer" onclick="switchView('fertilizer')">
+              <span class="icon">🧪</span> <span data-i18n="nav_fertilizer">Fertilizer Guide</span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-link" id="tabGrowth" onclick="switchView('growth')">
+              <span class="icon">🌾</span> <span data-i18n="nav_growth">Crop Growth Tips</span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-link" id="tabChat" onclick="switchView('chat')">
+              <span class="icon">💬</span> <span data-i18n="nav_chat">FarmSathi AI</span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-link" id="tabDashboard" onclick="switchView('dashboard')">
+              <span class="icon">📊</span> <span data-i18n="nav_dashboard">Dashboard</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Language Selector -->
+      <div class="lang-selector-group" role="group" aria-label="Language selection">
+        <button class="lang-btn active" id="langBtnEn" onclick="changeGlobalLanguage('en')">English</button>
+        <button class="lang-btn" id="langBtnMr" onclick="changeGlobalLanguage('mr')">मराठी</button>
+        <button class="lang-btn" id="langBtnHi" onclick="changeGlobalLanguage('hi')">हिंदी</button>
+      </div>
+
+      <!-- Mobile Nav Hamburger Toggle -->
+      <button class="mobile-nav-toggle" id="mobileNavToggle" onclick="toggleMobileNav()" aria-label="Toggle navigation menu">
+        ☰
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Application Body -->
+  <main class="app-container">
+
+    <!-- ====================================================================
+         VIEW 1: HOME PAGE
+         ==================================================================== -->
+    <section id="viewHome" class="view-panel active">
+      
+      <!-- Hero Section -->
+      <div class="hero-section">
+        <div class="hero-pattern-bg"></div>
+        <div class="hero-glow-blob"></div>
+
+        <div class="hero-content">
+          <div class="hero-pill-badge">
+            <span>✨ AI-Powered Agriculture • कृषी मित्र</span>
+          </div>
+
+          <h1 class="hero-title">
+            <span class="gradient-text" data-i18n="hero_title_accent">Smart Farming with AI</span><br>
+            <span data-i18n="hero_title_sub">Protect & Grow Your Harvest</span>
+          </h1>
+
+          <p class="hero-description" data-i18n="hero_desc">
+            Detect crop diseases instantly, get scientific fertilizer recommendations, and improve your crop health with FarmSathi — crafted specifically for Indian farmers.
+          </p>
+
+          <div class="hero-cta-group">
+            <button class="btn-farmer btn-primary-action" onclick="switchView('detect')">
+              <span class="btn-icon">🌱</span>
+              <span data-i18n="btn_check_crop">Check My Crop</span>
+            </button>
+            <button class="btn-farmer btn-secondary-action" onclick="switchView('chat')">
+              <span class="btn-icon">💬</span>
+              <span data-i18n="btn_ask_ai">Ask FarmSathi AI</span>
+            </button>
+          </div>
+
+          <!-- Trust Badges Bar -->
+          <div class="hero-trust-bar">
+            <div class="trust-item">
+              <div class="trust-icon">🌾</div>
+              <div>
+                <div class="trust-number">10+ Crops</div>
+                <div class="trust-label" data-i18n="trust_crops">Sugarcane, Rice, Wheat & more</div>
+              </div>
+            </div>
+            <div class="trust-item">
+              <div class="trust-icon">🔬</div>
+              <div>
+                <div class="trust-number">96.5%</div>
+                <div class="trust-label" data-i18n="trust_accuracy">Pathology AI Accuracy</div>
+              </div>
+            </div>
+            <div class="trust-item">
+              <div class="trust-icon">🌐</div>
+              <div>
+                <div class="trust-number">3 Languages</div>
+                <div class="trust-label">मराठी, हिंदी & English</div>
+              </div>
+            </div>
+            <div class="trust-item">
+              <div class="trust-icon">🛡️</div>
+              <div>
+                <div class="trust-number">100% Free</div>
+                <div class="trust-label" data-i18n="trust_free">For All Indian Farmers</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Agri-Ribbon: Weather & Mandi Rates -->
+      <div class="agri-live-ribbon">
+        <!-- Weather Card -->
+        <div class="ribbon-card">
+          <div class="ribbon-header">
+            <div class="ribbon-title">
+              <span>🌦️</span> <span data-i18n="weather_title">Today's Agri-Weather & Spray Conditions</span>
+            </div>
+            <span class="ribbon-tag" data-i18n="weather_tag">Central Zone</span>
+          </div>
+          <div class="weather-stats-grid">
+            <div class="w-stat">
+              <div class="w-label">Temperature</div>
+              <div class="w-val">28°C</div>
+            </div>
+            <div class="w-stat">
+              <div class="w-label">Humidity</div>
+              <div class="w-val">62%</div>
+            </div>
+            <div class="w-stat">
+              <div class="w-label">Wind Speed</div>
+              <div class="w-val">9 km/h</div>
+            </div>
+            <div class="w-stat">
+              <div class="w-label">Rain Risk</div>
+              <div class="w-val">15%</div>
+            </div>
+          </div>
+          <div class="spray-advice-box" id="weatherSprayAdviceText">
+            🌿 Foliar spray is highly recommended today between 7:00 AM - 10:30 AM or 4:30 PM - 6:30 PM.
+          </div>
+        </div>
+
+        <!-- Live Mandi APMC Prices -->
+        <div class="ribbon-card">
+          <div class="ribbon-header">
+            <div class="ribbon-title">
+              <span>📈</span> <span data-i18n="mandi_title">Live APMC Mandi Rates (Market Pulse)</span>
+            </div>
+            <span class="ribbon-tag">Daily Rates</span>
+          </div>
+          <div class="mandi-ticker-track" id="mandiTickerTrack">
+            <!-- Injected by app.js -->
+          </div>
+          <div style="font-size: 0.8rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+            <span>* Modal market rates sourced from state APMCs</span>
+            <span style="color: #16a34a; font-weight: 700;">● Live Updated</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Features Section -->
+      <div class="section-heading-block">
+        <span class="section-tag" data-i18n="features_tag">Smart Solutions</span>
+        <h2 class="section-title" data-i18n="features_title">Everything a Modern Farmer Needs</h2>
+        <p class="section-subtitle" data-i18n="features_subtitle">
+          Designed with large, readable fonts and simple steps so you can get reliable farming advice in seconds.
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <!-- Feature 1 -->
+        <div class="feature-card" onclick="switchView('detect')">
+          <div>
+            <div class="feature-icon-wrapper f-icon-green">🌿</div>
+            <h3 class="feature-title" data-i18n="feat1_title">AI Crop Disease Detection</h3>
+            <p class="feature-text" data-i18n="feat1_desc">
+              Snap or upload a photo of a sick leaf. Our AI identifies diseases across sugarcane, rice, wheat, tomato, cotton and more with treatment steps.
+            </p>
+          </div>
+          <button class="feature-card-btn">
+            <span data-i18n="feat_cta_detect">Scan Leaf Now</span> →
+          </button>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="feature-card" onclick="switchView('fertilizer')">
+          <div>
+            <div class="feature-icon-wrapper f-icon-amber">🧪</div>
+            <h3 class="feature-title" data-i18n="feat2_title">Smart Fertilizer Recommendation</h3>
+            <p class="feature-text" data-i18n="feat2_desc">
+              Get scientifically balanced nutrient plans (Urea, DAP, MOP, Micronutrients) customized for your crop type, growth stage, and soil health.
+            </p>
+          </div>
+          <button class="feature-card-btn">
+            <span data-i18n="feat_cta_fert">Calculate Fertilizer</span> →
+          </button>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="feature-card" onclick="switchView('growth')">
+          <div>
+            <div class="feature-icon-wrapper f-icon-blue">💧</div>
+            <h3 class="feature-title" data-i18n="feat3_title">Crop Growth Guidance</h3>
+            <p class="feature-text" data-i18n="feat3_desc">
+              Practical suggestions for water scheduling, soil enrichment, green manuring, and integrated pest prevention tailored for higher yields.
+            </p>
+          </div>
+          <button class="feature-card-btn">
+            <span data-i18n="feat_cta_growth">View Growth Guide</span> →
+          </button>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="feature-card" onclick="switchView('chat')">
+          <div>
+            <div class="feature-icon-wrapper f-icon-purple">💬</div>
+            <h3 class="feature-title" data-i18n="feat4_title">Multilingual AI Chatbot</h3>
+            <p class="feature-text" data-i18n="feat4_desc">
+              Chat naturally with "FarmSathi AI" in English, मराठी, or हिंदी. Ask about yellow leaves, pest traps, fertilizers, and listen to spoken answers!
+            </p>
+          </div>
+          <button class="feature-card-btn">
+            <span data-i18n="feat_cta_chat">Chat with AI</span> →
+          </button>
+        </div>
+      </div>
+
+      <!-- How FarmSathi Works: 4 Simple Steps -->
+      <div class="how-it-works-section">
+        <div class="section-heading-block" style="margin-bottom: 20px;">
+          <span class="section-tag" data-i18n="how_tag">Simple 4 Steps</span>
+          <h2 class="section-title" data-i18n="how_title">How FarmSathi Works</h2>
+          <p class="section-subtitle" data-i18n="how_subtitle">
+            Easy for every farmer to use on their mobile phone in four clear steps.
+          </p>
+        </div>
+
+        <div class="steps-grid">
+          <!-- Step 1 -->
+          <div class="step-card">
+            <div class="step-number-badge">1</div>
+            <div class="step-icon">📸</div>
+            <h4 class="step-title" data-i18n="step1_title">Upload or Take Photo</h4>
+            <p class="step-desc" data-i18n="step1_desc">Take a clear close-up picture of the affected plant leaf or select from common test presets.</p>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="step-card">
+            <div class="step-number-badge">2</div>
+            <div class="step-icon">🧠</div>
+            <h4 class="step-title" data-i18n="step2_title">Instant AI Analysis</h4>
+            <p class="step-desc" data-i18n="step2_desc">Our AI vision scanner inspects color patterns, lesions, and necrosis with over 96% accuracy.</p>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="step-card">
+            <div class="step-number-badge">3</div>
+            <div class="step-icon">💊</div>
+            <h4 class="step-title" data-i18n="step3_title">Get Cure & Fertilizer Advice</h4>
+            <p class="step-desc" data-i18n="step3_desc">Receive immediate organic remedies, safe spray dosage, and balanced nutrient guidance.</p>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="step-card">
+            <div class="step-number-badge">4</div>
+            <div class="step-icon">🗣️</div>
+            <h4 class="step-title" data-i18n="step4_title">Ask Questions in Your Language</h4>
+            <p class="step-desc" data-i18n="step4_desc">Consult FarmSathi AI in Marathi, Hindi, or English. You can even tap the speaker to listen aloud!</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ====================================================================
+         VIEW 2: AI CROP DISEASE DETECTION STUDIO
+         ==================================================================== -->
+    <section id="viewDetect" class="view-panel">
+      
+      <div class="section-heading-block" style="text-align: left; margin-bottom: 24px;">
+        <span class="section-tag" data-i18n="detect_tag">AI Pathology</span>
+        <h2 class="section-title" data-i18n="detect_heading">AI Crop Disease Detection Studio</h2>
+        <p class="section-subtitle" data-i18n="detect_sub">
+          Upload or take a photo of any crop leaf to get instant disease diagnosis, causes, organic prevention, and safe treatments.
+        </p>
+      </div>
+
+      <div class="studio-container">
+        <!-- Input Studio Panel -->
+        <div class="studio-card">
+          <h3 class="studio-card-title">
+            <span>📷</span> <span data-i18n="upload_card_title">Step 1: Upload Plant Leaf Image</span>
+          </h3>
+          <p class="studio-card-subtitle" data-i18n="upload_card_sub">
+            Works with Sugarcane, Rice, Wheat, Cotton, Tomato, Onion, Potato, Maize, Soybean & other Indian crops.
+          </p>
+
+          <!-- Crop Selection Dropdown -->
+          <div class="form-field-group">
+            <label class="field-label" for="cropSelector" data-i18n="label_crop_type">Select Crop (or let AI auto-detect):</label>
+            <select id="cropSelector" class="form-select">
+              <option value="auto">✨ Auto-Detect Crop from Image</option>
+              <option value="sugarcane">🎋 Sugarcane (ऊस / गन्ना)</option>
+              <option value="rice">🌾 Rice / Paddy (भात / धान)</option>
+              <option value="wheat">🌿 Wheat (गहू / गेहूं)</option>
+              <option value="cotton">☁️ Cotton (कापूस / कपास)</option>
+              <option value="tomato">🍅 Tomato (टोमॅटो / टमाटर)</option>
+              <option value="onion">🧅 Onion (कांदा / प्याज)</option>
+              <option value="potato">🥔 Potato (बटाटा / आलू)</option>
+              <option value="maize">🌽 Maize (मका / मक्का)</option>
+              <option value="soybean">🌱 Soybean (सोयाबीन)</option>
+            </select>
+          </div>
+
+          <!-- Drag & Drop Zone -->
+          <div class="dropzone-box" id="dropzoneBox" onclick="triggerFileInput()">
+            <input type="file" id="leafFileInput" accept="image/*" style="display: none;" onchange="handleFileSelected(event)">
+            <div class="dropzone-icon">🍃</div>
+            <h4 class="dropzone-title" data-i18n="dropzone_title">Click or Drag & Drop Leaf Photo</h4>
+            <p class="dropzone-hint" data-i18n="dropzone_hint">Supports JPG, PNG, WEBP (Max 15MB)</p>
+            <div class="upload-actions-row">
+              <button type="button" class="btn-upload-file" onclick="event.stopPropagation(); triggerFileInput();">
+                📁 <span data-i18n="btn_browse_photo">Browse Photo</span>
+              </button>
+              <button type="button" class="btn-camera" onclick="event.stopPropagation(); openCameraModal();">
+                📸 <span data-i18n="btn_take_photo">Take Live Photo</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Preview & Laser Scanning Stage -->
+          <div class="preview-stage-container" id="previewStage">
+            <div class="scanner-laser-line"></div>
+            <div class="scan-progress-bar-wrap">
+              <div class="scan-progress-bar" id="scanProgressBar"></div>
+            </div>
+            <img id="leafPreviewImg" class="preview-image" alt="Selected Crop Leaf Preview" style="display: none;">
+            <div id="leafPreviewSvgCanvas" class="preview-svg-canvas">
+              <!-- Rendered SVG leaf preview -->
+            </div>
+          </div>
+
+          <!-- Quick Test Sample Presets -->
+          <div class="presets-section">
+            <div class="presets-label">
+              <span>⚡</span> <span data-i18n="presets_title">Try Quick Sample Leaves (1-Click Test):</span>
+            </div>
+            <div class="presets-chips-grid" id="presetsChipsGrid">
+              <!-- Populated by app.js -->
+            </div>
+          </div>
+
+          <!-- Analyze Action Button -->
+          <button id="btnAnalyze" class="btn-analyze-crop" onclick="startDiseaseAnalysis()" disabled>
+            <span>🔬</span> <span data-i18n="btn_analyze_text">Analyze Crop Health</span>
+          </button>
+        </div>
+
+        <!-- Output Diagnosis Results Panel -->
+        <div class="results-card" id="resultsCard">
+          <!-- Empty State -->
+          <div class="results-empty-placeholder" id="resultsEmptyState">
+            <div class="results-empty-icon">🧪</div>
+            <h3 style="font-size: 1.3rem; font-weight: 700; color: var(--primary-900); margin-bottom: 8px;" data-i18n="results_empty_title">
+              Ready to Inspect Your Crop
+            </h3>
+            <p style="font-size: 0.95rem; max-width: 320px; margin: 0 auto;" data-i18n="results_empty_desc">
+              Upload a plant leaf photo or tap any sample preset on the left, then click "Analyze Crop Health".
+            </p>
+          </div>
+
+          <!-- Full Diagnosis Report Container -->
+          <div class="diagnosis-container" id="diagnosisReport">
+            <div class="diagnosis-header-badge">
+              <span class="status-badge" id="diagStatusBadge">
+                <span id="diagStatusDot">●</span> <span id="diagStatusText">Disease Detected</span>
+              </span>
+              <div class="confidence-meter">
+                <span>AI Confidence:</span>
+                <span id="diagConfidenceVal" style="color: var(--primary-800); font-size: 1.1rem;">96.8%</span>
+              </div>
+            </div>
+
+            <div class="diagnosis-crop-name" id="diagCropName">Sugarcane (ऊँस)</div>
+            <h3 class="diagnosis-disease-name" id="diagDiseaseName">Red Rot Disease (Colletotrichum falcatum)</h3>
+
+            <!-- Symptoms Accordion Block -->
+            <div class="diag-section">
+              <div class="diag-section-title">
+                <span>🔍</span> <span data-i18n="diag_symptoms_title">Observed Symptoms:</span>
+              </div>
+              <ul class="diag-list" id="diagSymptomsList"></ul>
+            </div>
+
+            <!-- Possible Causes Block -->
+            <div class="diag-section">
+              <div class="diag-section-title">
+                <span>⚠️</span> <span data-i18n="diag_causes_title">Possible Causes:</span>
+              </div>
+              <ul class="diag-list" id="diagCausesList"></ul>
+            </div>
+
+            <!-- Prevention Methods Block -->
+            <div class="diag-section">
+              <div class="diag-section-title">
+                <span>🛡️</span> <span data-i18n="diag_prevention_title">Prevention Methods (Organic & Cultural):</span>
+              </div>
+              <ul class="diag-list" id="diagPreventionList"></ul>
+            </div>
+
+            <!-- Recommended Treatment Block -->
+            <div class="diag-section" style="border-left: 4px solid var(--primary-600);">
+              <div class="diag-section-title">
+                <span>💊</span> <span data-i18n="diag_treatment_title">Recommended Treatment & Spray Guide:</span>
+              </div>
+              <ul class="diag-list" id="diagTreatmentList"></ul>
+            </div>
+
+            <!-- Mandatory Safety Warning -->
+            <div class="safety-disclaimer-box" data-i18n="diag_safety_warning">
+              ⚠️ <strong>Safe Handling Advisory:</strong> Always follow exact product-label instructions and wear protective gear. Do not apply chemical overdoses without local soil or crop inspection. For precise regional advice, consult your nearest Krishi Vigyan Kendra (KVK).
+            </div>
+
+            <!-- Post-Diagnosis Action Buttons -->
+            <div class="diag-actions-row">
+              <button class="btn-secondary-diag" onclick="saveCurrentDiagnosisReport()">
+                💾 <span data-i18n="btn_save_report">Save to My Reports</span>
+              </button>
+              <button class="btn-secondary-diag" onclick="printDiagnosisCard()">
+                🖨️ <span data-i18n="btn_print_report">Print Card</span>
+              </button>
+              <button class="btn-ask-chat-diag" onclick="consultAIAboutCurrentDisease()">
+                💬 <span data-i18n="btn_ask_ai_disease">Ask AI About Cure</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Unclear Image Alert Panel -->
+          <div class="unclear-alert-card" id="unclearImageAlert" style="display: none;">
+            <div class="unclear-icon">📷</div>
+            <h3 class="unclear-title" data-i18n="unclear_title">Image is Unclear or Not a Crop Leaf</h3>
+            <p class="unclear-text" data-i18n="unclear_desc">
+              Our AI safety system detected that this photo is blurry, poorly lit, or does not clearly display a plant leaf. Rather than giving a false or misleading diagnosis, we urge you to upload a clear, focused photo in bright daylight.
+            </p>
+            <div style="display: flex; justify-content: center; gap: 12px;">
+              <button class="btn-upload-file" onclick="triggerFileInput()">
+                📸 <span data-i18n="btn_try_again">Upload Clearer Photo</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ====================================================================
+         VIEW 3: SMART FERTILIZER RECOMMENDATION
+         ==================================================================== -->
+    <section id="viewFertilizer" class="view-panel">
+      
+      <div class="section-heading-block" style="text-align: left; margin-bottom: 24px;">
+        <span class="section-tag" data-i18n="fert_tag">Nutrient Management</span>
+        <h2 class="section-title" data-i18n="fert_heading">Smart Fertilizer Recommendation Engine</h2>
+        <p class="section-subtitle" data-i18n="fert_sub">
+          Calculates balanced nutrient schedules based on your crop stage, visible deficiencies, and soil conditions without unsafe overdosing.
+        </p>
+      </div>
+
+      <div class="fertilizer-wizard-container">
+        <!-- Input Form Wizard -->
+        <div class="wizard-card">
+          <h3 class="studio-card-title">
+            <span>🧪</span> <span data-i18n="fert_form_title">Crop & Field Information</span>
+          </h3>
+          <p class="studio-card-subtitle" data-i18n="fert_form_sub">Fill in your field details to get customized nutrition recommendations.</p>
+
+          <form id="fertilizerForm" onsubmit="calculateFertilizerPlan(event)">
+            <div class="wizard-grid-2">
+              <div class="form-field-group">
+                <label class="field-label" for="fertCrop" data-i18n="fert_label_crop">1. Crop Type:</label>
+                <select id="fertCrop" class="form-select" required>
+                  <option value="sugarcane">🎋 Sugarcane (ऊस / गन्ना)</option>
+                  <option value="rice">🌾 Rice / Paddy (भात / धान)</option>
+                  <option value="wheat">🌿 Wheat (गहू / गेहूं)</option>
+                  <option value="cotton">☁️ Cotton (कापूस / कपास)</option>
+                  <option value="tomato">🍅 Tomato (टोमॅटो / टमाटर)</option>
+                  <option value="onion">🧅 Onion (कांदा / प्याज)</option>
+                  <option value="potato">🥔 Potato (बटाटा / आलू)</option>
+                  <option value="maize">🌽 Maize (मका / मक्का)</option>
+                  <option value="soybean">🌱 Soybean (सोयाबीन)</option>
+                </select>
+              </div>
+
+              <div class="form-field-group">
+                <label class="field-label" for="fertStage" data-i18n="fert_label_stage">2. Crop Growth Stage:</label>
+                <select id="fertStage" class="form-select" required>
+                  <option value="germination">🌱 Germination / Early Seedling (0-20 days)</option>
+                  <option value="vegetative" selected>🌿 Vegetative / Tillering (20-60 days)</option>
+                  <option value="flowering">🌸 Flowering / Grand Growth Stage</option>
+                  <option value="fruiting">🍇 Fruit / Grain Filling Stage</option>
+                  <option value="maturity">🌾 Maturity / Pre-Harvest Stage</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="wizard-grid-2">
+              <div class="form-field-group">
+                <label class="field-label" for="fertSymptom" data-i18n="fert_label_symptom">3. Visible Symptoms / Deficiencies:</label>
+                <select id="fertSymptom" class="form-select">
+                  <option value="none">✅ None (Healthy / Routine Nutritional Schedule)</option>
+                  <option value="yellowing_lower">🍂 Yellowing of lower/older leaves (Nitrogen deficiency)</option>
+                  <option value="yellowing_upper">🍃 Whitish-yellow young top leaves (Iron / Sulphur deficiency)</option>
+                  <option value="purple_leaves">🍇 Dark green / Purplish leaves (Phosphorus deficiency)</option>
+                  <option value="leaf_burn">🔥 Burnt margins & brown leaf tips (Potash deficiency)</option>
+                  <option value="stunted_leaves">📉 Stunted small leaves & shortened nodes (Zinc deficiency)</option>
+                </select>
+              </div>
+
+              <div class="form-field-group">
+                <label class="field-label" for="fertSoil" data-i18n="fert_label_soil">4. Available Soil Information:</label>
+                <select id="fertSoil" class="form-select">
+                  <option value="black">Deep Black Cotton Soil (भारी काळी जमीन)</option>
+                  <option value="loam" selected>Fertile Loamy / Alluvial Soil (गाळाची जमीन)</option>
+                  <option value="sandy">Sandy Loam / Light Soil (हलकी वालुकामय जमीन)</option>
+                  <option value="clayey">Clayey Soil (चिकनमाती)</option>
+                  <option value="calcareous">Calcareous High-Lime Soil (चुनखडीयुक्त जमीन)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-field-group">
+              <label class="field-label" for="fertIrrigation" data-i18n="fert_label_irrigation">5. Irrigation System:</label>
+              <select id="fertIrrigation" class="form-select">
+                <option value="drip">💧 Drip Irrigation (ठिबक सिंचन - Fertigation)</option>
+                <option value="flood">🌊 Flood / Canal Furrow (पाट पाणी)</option>
+                <option value="rainfed">🌧️ Rainfed / Dryland (कोरडवाहू)</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn-farmer btn-primary-action" style="width: 100%;">
+              <span>🧪</span> <span data-i18n="btn_calc_fert">Get Tailored Fertilizer Recommendation</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Recommendation Output Card -->
+        <div class="fertilizer-result-card" id="fertResultCard">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <span class="status-badge status-healthy" id="fertTargetCropBadge">Sugarcane • Vegetative</span>
+            <span style="font-size: 0.82rem; font-weight: 700; color: var(--primary-700);">Balanced Nutrition Plan</span>
+          </div>
+
+          <h3 id="fertPrimaryTitle" style="font-size: 1.5rem; font-weight: 800; color: var(--primary-950); margin-bottom: 12px;">
+            NPK 19:19:19 + Urea Split Top-Dressing
+          </h3>
+
+          <div class="nutrient-badges-row" id="fertNutrientBadges">
+            <span class="nutrient-badge">Nitrogen (N) - 19%</span>
+            <span class="nutrient-badge">Phosphorus (P) - 19%</span>
+            <span class="nutrient-badge">Potassium (K) - 19%</span>
+          </div>
+
+          <div class="fert-detail-item">
+            <div class="fert-detail-title">
+              <span>🎯</span> <span data-i18n="fert_why_title">Why it is recommended:</span>
+            </div>
+            <div class="fert-detail-desc" id="fertWhyDesc">
+              During the vegetative tillering phase, your crop builds structural stems and expands leaf area. Balanced NPK drives simultaneous root branching and vigorous leafy canopy formation.
+            </div>
+          </div>
+
+          <div class="fert-detail-item">
+            <div class="fert-detail-title">
+              <span>⏰</span> <span data-i18n="fert_when_title">When to use it:</span>
+            </div>
+            <div class="fert-detail-desc" id="fertWhenDesc">
+              Apply 25 to 45 days after planting when active tillers are emerging. Apply in split doses right before scheduled watering.
+            </div>
+          </div>
+
+          <div class="fert-detail-item">
+            <div class="fert-detail-title">
+              <span>🚜</span> <span data-i18n="fert_guidance_title">General Application Guidance:</span>
+            </div>
+            <div class="fert-detail-desc" id="fertGuidanceDesc">
+              For drip systems: Dissolve water-soluble grade 19:19:19 @ 3-4 kg/acre per fertigation run. For soil broadcasting: Incorporate 5-8 cm deep into moist soil to minimize nitrogen volatilization.
+            </div>
+          </div>
+
+          <div class="fert-detail-item">
+            <div class="fert-detail-title">
+              <span>🌱</span> <span data-i18n="fert_organic_title">Bio-Fertilizer & Organic Alternative:</span>
+            </div>
+            <div class="fert-detail-desc" id="fertOrganicDesc">
+              Supplement with 2 tons of decomposed vermicompost and apply Jeevamrut (200 L/acre) every 2 weeks to unlock trapped soil minerals naturally.
+            </div>
+          </div>
+
+          <div class="safety-disclaimer-box" data-i18n="fert_safety_note">
+            ⚠️ <strong>Agricultural Expert Disclaimer:</strong> Exact chemical dosage depends on soil test reports and local climatic conditions. Do not overdose. Always consult your local Agriculture Extension Officer or Krishi Vigyan Kendra (KVK) and strictly follow product label instructions.
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ====================================================================
+         VIEW 4: CROP GROWTH RECOMMENDATIONS
+         ==================================================================== -->
+    <section id="viewGrowth" class="view-panel">
+      
+      <div class="section-heading-block" style="text-align: left; margin-bottom: 24px;">
+        <span class="section-tag" data-i18n="growth_tag">Best Practices</span>
+        <h2 class="section-title" data-i18n="growth_heading">Comprehensive Crop Growth Recommendations</h2>
+        <p class="section-subtitle" data-i18n="growth_sub">
+          Simple, easy-to-understand cultivation practices covering irrigation, soil enrichment, nutrition, and IPM for peak yields.
+        </p>
+      </div>
+
+      <div class="growth-section-wrapper">
+        <!-- Crop Selector Filter Chips -->
+        <div class="crop-filter-chips" id="growthCropFilters">
+          <button class="crop-filter-btn active" onclick="filterGrowthCrop('sugarcane')">🎋 Sugarcane (ऊस)</button>
+          <button class="crop-filter-btn" onclick="filterGrowthCrop('rice')">🌾 Rice / Paddy (भात)</button>
+          <button class="crop-filter-btn" onclick="filterGrowthCrop('wheat')">🌿 Wheat (गहू)</button>
+          <button class="crop-filter-btn" onclick="filterGrowthCrop('tomato')">🍅 Tomato (टोमॅटो)</button>
+          <button class="crop-filter-btn" onclick="filterGrowthCrop('cotton')">☁️ Cotton (कापूस)</button>
+        </div>
+
+        <div class="growth-cards-grid">
+          <!-- Pillar 1: Water Management -->
+          <div class="growth-pillar-card">
+            <div class="pillar-icon-wrap f-icon-blue">💧</div>
+            <h3 class="pillar-title" data-i18n="pillar_water">1. Water & Irrigation Management</h3>
+            <p class="pillar-text" id="growthWaterText">
+              Drip irrigation reduces water consumption by 45%. Critical stages include the Formative Stage (60-130 days) and Grand Growth Stage (130-250 days). Maintain soil moisture at 50% available water and avoid waterlogging.
+            </p>
+          </div>
+
+          <!-- Pillar 2: Soil Health -->
+          <div class="growth-pillar-card">
+            <div class="pillar-icon-wrap f-icon-amber">🪴</div>
+            <h3 class="pillar-title" data-i18n="pillar_soil">2. Soil Health & Preparation</h3>
+            <p class="pillar-text" id="growthSoilText">
+              Ideal pH is 6.5 to 7.5. Deep well-drained loamy soil with minimum 0.5% organic carbon. Incorporate 10-15 tonnes of FYM or well-rotted vermicompost per acre before furrow opening.
+            </p>
+          </div>
+
+          <!-- Pillar 3: Nutrient Scheduling -->
+          <div class="growth-pillar-card">
+            <div class="pillar-icon-wrap f-icon-green">🧪</div>
+            <h3 class="pillar-title" data-i18n="pillar_nutrients">3. Balanced Nutrient Management</h3>
+            <p class="pillar-text" id="growthNutrientsText">
+              Recommended Dose: 250:115:115 kg N:P:K per hectare for Suru cane. Apply Nitrogen in 4 splits: 10% at planting, 40% at tillering (6-8 weeks), 10% at earthing up, and 40% at grand growth.
+            </p>
+          </div>
+
+          <!-- Pillar 4: Pest & Disease IPM -->
+          <div class="growth-pillar-card">
+            <div class="pillar-icon-wrap f-icon-purple">🛡️</div>
+            <h3 class="pillar-title" data-i18n="pillar_ipm">4. Pest & Disease Prevention (IPM)</h3>
+            <p class="pillar-text" id="growthPestText">
+              Early Shoot Borer: Release Trichogramma chilonis egg parasitoids (20,000/acre). For white grub control, apply Metarhizium anisopliae or neem cake at first monsoon showers.
+            </p>
+          </div>
+
+          <!-- Pillar 5: Basic Care Tips -->
+          <div class="growth-pillar-card" style="grid-column: 1 / -1;">
+            <div class="pillar-icon-wrap f-icon-green">💡</div>
+            <h3 class="pillar-title" data-i18n="pillar_care">5. Basic Crop-Care & Yield Boosting Tips</h3>
+            <p class="pillar-text" id="growthCareText">
+              Perform dry mulching with sugarcane trash (5 tonnes/acre) to conserve moisture and suppress 85% weed growth. Timely earthing-up (मोठी बांधणी) prevents cane lodging during stormy weather.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ====================================================================
+         VIEW 5: MULTILINGUAL AI CHATBOT (FARMSATHI AI)
+         ==================================================================== -->
+    <section id="viewChat" class="view-panel">
+      
+      <div class="section-heading-block" style="text-align: left; margin-bottom: 24px;">
+        <span class="section-tag" data-i18n="chat_tag">24/7 AI Assistant</span>
+        <h2 class="section-title" data-i18n="chat_heading">FarmSathi AI Multilingual Farming Chatbot</h2>
+        <p class="section-subtitle" data-i18n="chat_sub">
+          Ask questions in English, मराठी, or हिंदी. Get instant solutions with voice read-aloud support!
+        </p>
+      </div>
+
+      <div class="chatbot-layout-card">
+        <!-- Chatbot Top Bar -->
+        <div class="chatbot-header">
+          <div class="bot-avatar-info">
+            <div class="bot-avatar">🤖</div>
+            <div class="bot-name-wrap">
+              <h3>FarmSathi AI</h3>
+              <div class="bot-status-tag">
+                <span class="bot-status-dot"></span>
+                <span data-i18n="bot_online">Online • कृषी मार्गदर्शक</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- In-Chat Language Selector Buttons -->
+          <div class="lang-selector-group" style="background: rgba(255, 255, 255, 0.2); border-color: rgba(255, 255, 255, 0.3);">
+            <button class="lang-btn active" id="chatLangBtnEn" onclick="changeChatLanguage('en')">English</button>
+            <button class="lang-btn" id="chatLangBtnMr" onclick="changeChatLanguage('mr')">मराठी</button>
+            <button class="lang-btn" id="chatLangBtnHi" onclick="changeChatLanguage('hi')">हिंदी</button>
+          </div>
+        </div>
+
+        <!-- Chat Conversation Messages Container -->
+        <div class="chat-messages-container" id="chatMessages">
+          <!-- Populated by chatbot.js & app.js -->
+        </div>
+
+        <!-- Quick Question Chips Tray -->
+        <div class="quick-prompts-tray" id="quickPromptsTray">
+          <!-- Populated dynamically based on language -->
+        </div>
+
+        <!-- Message Input Bar -->
+        <div class="chat-input-bar">
+          <button class="btn-chat-mic" id="btnChatMic" onclick="toggleSpeechRecognition()" title="Speak with microphone">
+            🎙️
+          </button>
+          <input type="text" id="chatUserInput" class="chat-text-input" placeholder="Ask FarmSathi AI anything about crops, pests, fertilizers..." onkeydown="handleChatInputKey(event)">
+          <button class="btn-chat-send" id="btnChatSend" onclick="sendUserChatMessage()" title="Send Question">
+            ➤
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ====================================================================
+         VIEW 6: FARMER DASHBOARD & PREVIOUS REPORTS
+         ==================================================================== -->
+    <section id="viewDashboard" class="view-panel">
+      
+      <div class="section-heading-block" style="text-align: left; margin-bottom: 24px;">
+        <span class="section-tag" data-i18n="dash_tag">My Farm Hub</span>
+        <h2 class="section-title" data-i18n="dash_heading">Farmer Dashboard (माझे शेत / मेरा खेत)</h2>
+        <p class="section-subtitle" data-i18n="dash_sub">
+          Overview of your field health, past AI disease scans, fertilizer guides, and saved recommendations.
+        </p>
+      </div>
+
+      <!-- Quick Stats Grid -->
+      <div class="dashboard-grid">
+        <div class="stat-widget-card">
+          <div class="stat-widget-icon f-icon-green">🌿</div>
+          <div class="stat-widget-info">
+            <div class="stat-widget-val" id="dashCropHealthVal">94%</div>
+            <div class="stat-widget-label" data-i18n="stat_health">Crop Health Index</div>
+          </div>
+        </div>
+
+        <div class="stat-widget-card">
+          <div class="stat-widget-icon f-icon-amber">🔬</div>
+          <div class="stat-widget-info">
+            <div class="stat-widget-val" id="dashScansCount">6</div>
+            <div class="stat-widget-label" data-i18n="stat_scans">Total Disease Scans</div>
+          </div>
+        </div>
+
+        <div class="stat-widget-card">
+          <div class="stat-widget-icon f-icon-blue">🧪</div>
+          <div class="stat-widget-info">
+            <div class="stat-widget-val" id="dashFertPlansCount">4</div>
+            <div class="stat-widget-label" data-i18n="stat_fert">Fertilizer Plans Generated</div>
+          </div>
+        </div>
+
+        <div class="stat-widget-card">
+          <div class="stat-widget-icon f-icon-purple">💬</div>
+          <div class="stat-widget-info">
+            <div class="stat-widget-val" id="dashAiQueriesCount">12</div>
+            <div class="stat-widget-label" data-i18n="stat_queries">AI Assistant Queries</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Shortcuts Grid -->
+      <div class="features-grid" style="margin-bottom: 36px;">
+        <div class="feature-card" onclick="switchView('detect')">
+          <div>
+            <div class="feature-icon-wrapper f-icon-green">📸</div>
+            <h3 class="feature-title" data-i18n="dash_sc_scan">New Disease Scan</h3>
+            <p class="feature-text" data-i18n="dash_sc_scan_desc">Upload crop photo to diagnose health and diseases.</p>
+          </div>
+          <button class="feature-card-btn"><span>Open Scanner</span> →</button>
+        </div>
+
+        <div class="feature-card" onclick="switchView('fertilizer')">
+          <div>
+            <div class="feature-icon-wrapper f-icon-amber">🧪</div>
+            <h3 class="feature-title" data-i18n="dash_sc_fert">Fertilizer Calculator</h3>
+            <p class="feature-text" data-i18n="dash_sc_fert_desc">Calculate exact basal and foliar nutrient splits.</p>
+          </div>
+          <button class="feature-card-btn"><span>Open Calculator</span> →</button>
+        </div>
+
+        <div class="feature-card" onclick="switchView('growth')">
+          <div>
+            <div class="feature-icon-wrapper f-icon-blue">🌾</div>
+            <h3 class="feature-title" data-i18n="dash_sc_guide">Crop Care Guide</h3>
+            <p class="feature-text" data-i18n="dash_sc_guide_desc">Best irrigation and soil practices per crop.</p>
+          </div>
+          <button class="feature-card-btn"><span>Open Guide</span> →</button>
+        </div>
+
+        <div class="feature-card" onclick="switchView('chat')">
+          <div>
+            <div class="feature-icon-wrapper f-icon-purple">💬</div>
+            <h3 class="feature-title" data-i18n="dash_sc_chat">FarmSathi Chatbot</h3>
+            <p class="feature-text" data-i18n="dash_sc_chat_desc">24/7 multilingual advice in Marathi, Hindi & English.</p>
+          </div>
+          <button class="feature-card-btn"><span>Open Chat</span> →</button>
+        </div>
+      </div>
+
+      <!-- Previous Diagnosis Reports Table -->
+      <div class="reports-section-card">
+        <div class="reports-header-row">
+          <div>
+            <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--primary-950);" data-i18n="reports_title">Previous Crop Diagnosis Reports</h3>
+            <p style="font-size: 0.88rem; color: var(--text-muted);" data-i18n="reports_sub">Saved historical scan records with symptoms and treatments</p>
+          </div>
+          <button class="report-action-btn" onclick="clearAllSavedReports()" style="color: #dc2626;">
+            🗑️ Clear History
+          </button>
+        </div>
+
+        <div class="reports-table-wrap">
+          <table class="reports-table">
+            <thead>
+              <tr>
+                <th>Date & Time</th>
+                <th>Crop</th>
+                <th>Diagnosis</th>
+                <th>Status</th>
+                <th>Confidence</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="reportsTableBody">
+              <!-- Populated by app.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Modal Popup for Camera & Report View -->
+  <div class="modal-overlay" id="generalModal">
+    <div class="modal-card">
+      <button class="modal-close-btn" onclick="closeModal()">✕</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer-section">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 2rem;">🌱</span>
+          <span style="font-size: 1.5rem; font-weight: 800; color: #ffffff;">FarmSathi</span>
+        </div>
+        <p data-i18n="footer_brand_desc">
+          Empowering Indian farmers with cutting-edge AI for crop disease detection, tailored fertilizer recommendations, and multilingual voice assistance.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4 data-i18n="footer_features">Features</h4>
+        <ul class="footer-links-list">
+          <li><a href="javascript:void(0)" onclick="switchView('detect')">Crop Disease Detection</a></li>
+          <li><a href="javascript:void(0)" onclick="switchView('fertilizer')">Fertilizer Recommendation</a></li>
+          <li><a href="javascript:void(0)" onclick="switchView('growth')">Crop Growth Guidance</a></li>
+          <li><a href="javascript:void(0)" onclick="switchView('chat')">FarmSathi AI Chatbot</a></li>
+          <li><a href="javascript:void(0)" onclick="switchView('dashboard')">Farmer Dashboard</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 data-i18n="footer_supported_crops">Supported Crops</h4>
+        <ul class="footer-links-list">
+          <li>Sugarcane (ऊस / गन्ना)</li>
+          <li>Rice / Paddy (भात / धान)</li>
+          <li>Wheat (गहू / गेहूं)</li>
+          <li>Cotton (कापूस / कपास)</li>
+          <li>Tomato (टोमॅटो / टमाटर)</li>
+          <li>Onion & Potato (कांदा व बटाटा)</li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 data-i18n="footer_helpline">Kisan Helpline</h4>
+        <ul class="footer-links-list">
+          <li>📞 Kisan Call Center: 1800-180-1551</li>
+          <li>📍 Nearest KVK Network</li>
+          <li>🌐 100% Free for Farmers</li>
+          <li>🇮🇳 Made for Indian Agriculture</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom-bar">
+      <div>© 2026 FarmSathi (फार्मसाथी) • Dedicated to the prosperity of our Annadata farmers.</div>
+      <div>Designed for smartphones & rural connectivity.</div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="data.js"></script>
+  <script src="chatbot.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

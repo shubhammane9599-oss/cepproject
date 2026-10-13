@@ -1,0 +1,21 @@
+{
+  "name": "farmsathi",
+  "version": "1.0.0",
+  "description": "FarmSathi - AI-Powered Agriculture Assistance for Indian Farmers",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "agriculture",
+    "ai",
+    "farming",
+    "crop-disease-detection",
+    "fertilizer-recommendation",
+    "chatbot",
+    "kisan-mitra"
+  ],
+  "author": "FarmSathi Team",
+  "license": "MIT"
+}
